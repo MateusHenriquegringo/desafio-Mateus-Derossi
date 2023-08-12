@@ -22,25 +22,25 @@ class CaixaDaLanchonete {
     if (!this.pagamentos.hasOwnProperty(metodoDePagamento)) {
       return "Forma de pagamento inválida!";
     }
-    if (itens == [] || itens == [""] || itens == "" || !itens) {
+    if (itens.length == 0) {
       return "Não há itens no carrinho de compra!";
     }
     // separa as informacoes recebidas para melhor tratamento
     let nomeItens = itens.map((e) => e.split(",")[0]);
     let quantidade = itens.map((e) => e.split(",")[1]);
-    // trata erros com nomes de pedidos e pedidos adicionais sem principais
+    // trata erros com nomes de pedidos que nao estao no cardapio
     for (const nome of nomeItens) {
       if (!this.produtos.hasOwnProperty(nome)) {
         return "Item inválido!";
       }
     }
-    // trata erro com a quantidade pedida
+    // trata erro da quantidade pedida
     for (const n of quantidade) {
       if (n <= 0 || !n) {
         return "Quantidade inválida!";
       }
     }
-
+    // trata erro de pedidos com adicionais sem conter os principais
     if (nomeItens.includes("chantily")) {
       if (!nomeItens.includes("cafe")) {
         return "Item extra não pode ser pedido sem o principal";
